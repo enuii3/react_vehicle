@@ -1,0 +1,16 @@
+.auth__root {
+  text-align: center;
+  height: 100vh;
+  display: flex;
+}
+.auth__status {
+  display: none;
+}
+.auth__input {
+  margin: 10px;
+}
+.auth__toggle {
+  margin: 10px;
+  color: dimgray;
+  cursor: pointer;
+}
