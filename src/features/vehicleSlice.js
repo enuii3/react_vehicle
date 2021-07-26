@@ -2,6 +2,48 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const apiUrl = "http://localhost:8000/";
+const initialState = {
+  segments: [
+    {
+      id: 0,
+      segment_name: "",
+    },
+  ],
+  brands: [
+    {
+      id: 0,
+      brand_name: "",
+    },
+  ],
+  vehicles: [
+    {
+      id: 0,
+      vehicle_name: "",
+      release_year: 2020,
+      price: 0.0,
+      segment: 0,
+      brand: 0,
+      segment_name: "",
+      brand_name: "",
+    },
+  ],
+  editedSegment: {
+    id: 0,
+    segment_name: "",
+  },
+  editedBrand: {
+    id: 0,
+    brand_name: "",
+  },
+  editedVehicle: {
+    id: 0,
+    vehicle_name: "",
+    release_year: 2020,
+    price: 0.0,
+    segment: 0,
+    brand: 0,
+  },
+};
 
 export const fetchAsyncGetSegments = createAsyncThunk(
   "segment/get",
@@ -73,7 +115,7 @@ export const fetchAsyncCreateBrand = createAsyncThunk(
     const res = await axios.post(`${apiUrl}api/brands/`, brand, {
       headers: {
         "Content-Type": "application/json",
-        Authorizaton: `token ${localStorage.token}`,
+        Authorization: `token ${localStorage.token}`,
       },
     });
     return res.data;
@@ -81,9 +123,9 @@ export const fetchAsyncCreateBrand = createAsyncThunk(
 );
 
 export const fetchAsyncUpdateBrand = createAsyncThunk(
-  "brand/patch",
+  "brand/put",
   async (brand) => {
-    const res = await axios.patch(`${apiUrl}api/${brand.id}/`, brand, {
+    const res = await axios.put(`${apiUrl}api/brands/${brand.id}/`, brand, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `token ${localStorage.token}`,
@@ -96,9 +138,9 @@ export const fetchAsyncUpdateBrand = createAsyncThunk(
 export const fetchAsyncDeleteBrand = createAsyncThunk(
   "brand/delete",
   async (id) => {
-    await axios.delete(`${apiUrl}api/${id}/`, {
+    await axios.delete(`${apiUrl}api/brands/${id}/`, {
       headers: {
-        "Content-Type": "appliaction/json",
+        "Content-Type": "application/json",
         Authorization: `token ${localStorage.token}`,
       },
     });
@@ -107,7 +149,7 @@ export const fetchAsyncDeleteBrand = createAsyncThunk(
 );
 
 export const fetchAsyncGetVehicles = createAsyncThunk(
-  "vehicles/get",
+  "vehicle/get",
   async () => {
     const res = await axios.get(`${apiUrl}api/vehicles/`, {
       headers: {
@@ -132,14 +174,18 @@ export const fetchAsyncCreateVehicle = createAsyncThunk(
 );
 
 export const fetchAsyncUpdateVehicle = createAsyncThunk(
-  "vehicle/patch",
+  "vehicle/put",
   async (vehicle) => {
-    const res = await axios.patch(`${apiUrl}api/vehicles/`, vehicle, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `token ${localStorage.token}`,
-      },
-    });
+    const res = await axios.put(
+      `${apiUrl}api/vehicles/${vehicle.id}/`,
+      vehicle,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `token ${localStorage.token}`,
+        },
+      }
+    );
     return res.data;
   }
 );
@@ -147,7 +193,7 @@ export const fetchAsyncUpdateVehicle = createAsyncThunk(
 export const fetchAsyncDeleteVehicle = createAsyncThunk(
   "vehicle/delete",
   async (id) => {
-    await axios.delete(`${apiUrl}/api/vehicle/${id}/`, {
+    await axios.delete(`${apiUrl}api/vehicles/${id}/`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `token ${localStorage.token}`,
@@ -159,48 +205,7 @@ export const fetchAsyncDeleteVehicle = createAsyncThunk(
 
 export const vehicleSlice = createSlice({
   name: "vehicle",
-  initialState: {
-    segments: [
-      {
-        id: 0,
-        segment_name: "",
-      },
-    ],
-    brands: [
-      {
-        id: 0,
-        brand_name: "",
-      },
-    ],
-    vehicles: [
-      {
-        id: 0,
-        vehicle_name: "",
-        release_year: 2020,
-        price: 0.0,
-        segment: 0,
-        brand: 0,
-        segment_name: "",
-        brand_name: "",
-      },
-    ],
-    editedSegment: {
-      id: 0,
-      segment_name: "",
-    },
-    editedBrand: {
-      id: 0,
-      brand_name: "",
-    },
-    editedVehicle: {
-      id: 0,
-      vehicle_name: "",
-      release_year: 2020,
-      price: 0.0,
-      segment: 0,
-      brand: 0,
-    },
-  },
+  initialState,
   reducers: {
     editSegment(state, action) {
       state.editedSegment = action.payload;
@@ -265,10 +270,8 @@ export const vehicleSlice = createSlice({
     builder.addCase(fetchAsyncDeleteBrand.fulfilled, (state, action) => {
       return {
         ...state,
-        brandnds: state.brandnds.filter((brand) => brand.id !== action.payload),
-        vehicles: state.vehicles.filter(
-          (veh) => veh.brandment !== action.payload
-        ),
+        brands: state.brands.filter((brand) => brand.id !== action.payload),
+        vehicles: state.vehicles.filter((veh) => veh.brand !== action.payload),
       };
     });
     builder.addCase(fetchAsyncGetVehicles.fulfilled, (state, action) => {
@@ -304,11 +307,11 @@ export const vehicleSlice = createSlice({
 
 export const { editSegment, editBrand, editVehicle } = vehicleSlice.actions;
 
-export const selectSegment = (state) => state.vehicle.segments;
+export const selectSegments = (state) => state.vehicle.segments;
 export const selectEditedSegment = (state) => state.vehicle.editedSegment;
-export const selectBrand = (state) => state.vehicle.brands;
+export const selectBrands = (state) => state.vehicle.brands;
 export const selectEditedBrand = (state) => state.vehicle.editedBrand;
-export const selectVehicle = (state) => state.vehicle.vehicles;
+export const selectVehicles = (state) => state.vehicle.vehicles;
 export const selectEditedVehicle = (state) => state.vehicle.editedVehicle;
 
 export default vehicleSlice.reducer;
