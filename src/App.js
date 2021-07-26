@@ -3,7 +3,6 @@ import styles from "./App.module.css";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import Auth from "./components/Auth";
 import MainPage from "./components/MainPage";
-import "./App.module.css";
 
 function App() {
   return (
