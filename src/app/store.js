@@ -5,6 +5,6 @@ import vehicleReducer from "../features/vehicleSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    vehilce: vehicleReducer,
+    vehicle: vehicleReducer,
   },
 });
