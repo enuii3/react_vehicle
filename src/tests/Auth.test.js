@@ -7,8 +7,6 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/authSlice";
 import Auth from "../components/Auth";
-import { expect } from "@jest/globals";
-import { useEventCallback } from "@material-ui/core";
 
 const mockHistoryPush = jest.fn();
 
