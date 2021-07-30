@@ -7,7 +7,6 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import vehicleReducer from "../features/vehicleSlice";
 import Brand from "../components/Brand";
-import { useEventCallback } from "@material-ui/core";
 
 const handlers = [
   rest.get("http://localhost:8000/api/brands/", (req, res, ctx) => {
