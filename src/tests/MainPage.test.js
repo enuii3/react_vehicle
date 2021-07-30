@@ -7,7 +7,6 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/authSlice";
 import vehicleReducer from "../features/vehicleSlice";
-import Auth from "../components/Auth";
 import MainPage from "../components/MainPage";
 
 const mockHistoryPush = jest.fn();
