@@ -21,7 +21,7 @@ const Brand = () => {
     const fetchBootLoader = async () => {
       const result = await dispatch(fetchAsyncGetBrands());
       if (fetchAsyncGetBrands.rejected.match(result)) {
-        setSuccessMsg("Get error");
+        setSuccessMsg("Get error!");
       }
     };
     fetchBootLoader();
@@ -36,7 +36,7 @@ const Brand = () => {
           type="text"
           placeholder="new brand name"
           value={editedBrand.brand_name}
-          onClick={async (e) =>
+          onChange={async (e) =>
             await dispatch(
               editBrand({ ...editedBrand, brand_name: e.target.value })
             )
@@ -44,16 +44,16 @@ const Brand = () => {
         />
         <button
           data-testid="btn-post"
-          disabled={!editedBrand.segment_name}
+          disabled={!editedBrand.brand_name}
           onClick={
             editedBrand.id === 0
               ? async () => {
                   await dispatch(
                     fetchAsyncCreateBrand({
-                      segment_name: editedBrand.segment_name,
+                      brand_name: editedBrand.brand_name,
                     })
                   );
-                  await dispatch(editBrand({ id: 0, segment_name: "" }));
+                  await dispatch(editBrand({ id: 0, brand_name: "" }));
                 }
               : async () => {
                   const result = await dispatch(
@@ -62,11 +62,11 @@ const Brand = () => {
                   await dispatch(
                     editBrand({
                       id: 0,
-                      segment_name: "",
+                      brand_name: "",
                     })
                   );
                   if (fetchAsyncUpdateBrand.fulfilled.match(result)) {
-                    setSuccessMsg("Updated in segment!");
+                    setSuccessMsg("Updated in brand!");
                   }
                 }
           }>
