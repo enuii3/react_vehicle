@@ -50,7 +50,7 @@ const Vehicle = () => {
         <input
           type="text"
           placeholder="new vehicle name"
-          velue={editedVehicle.vehicle_name}
+          value={editedVehicle.vehicle_name}
           onChange={(e) =>
             dispatch(
               editVehicle({ ...editedVehicle, vehicle_name: e.target.value })
@@ -159,7 +159,7 @@ const Vehicle = () => {
                     fetchAsyncDeleteVehicle(vehicle.id)
                   );
                   if (fetchAsyncDeleteVehicle.fulfilled.match(result)) {
-                    setSuccessMsg("Deleted in vehicle");
+                    setSuccessMsg("Deleted in vehicle!");
                   }
                 }}>
                 delete
